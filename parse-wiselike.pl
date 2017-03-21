@@ -28,6 +28,8 @@ while (<$fh>) {
         $r_date = $2;
         $r_body = '';
         $r_user =~ s/.*avatar image\.|^\s*//;
+        $r_date =~ s/Jan\s(\d+)/Jan $1 2017/;
+        $r_date =~ s/([A-Za-z]+?\s\d+)$/$1 2016/;
     }
     elsif (m{\[http://wslk.io/(.+)\]}) {
         $id = $1;
