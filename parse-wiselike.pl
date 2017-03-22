@@ -4,6 +4,7 @@ use 5.12.0;
 #  • Anonymous asked Audrey Tang:
 ##    Anonymous profile image
 ##    Anonymous•Dec 27
+#  • Anonymous's avatar image.Anonymous asked Audrey Tang:
 use utf8;
 my ($id, $title, $user, $body, @replies);
 my ($r_user, $r_body, $r_date);
@@ -13,7 +14,7 @@ while (<$fh>) {
     if (/• (.+) asked Audrey Tang:/) {
         if ($r_user) { push @replies, { user => $r_user, date => $r_date, body => $r_body }; }
         if (@replies) {
-            push @parsed, { id => $id, title => $title, user => $user, replies => [@replies] };
+            push @parsed, { id => $id, title => $title, user => $user, body => $body, replies => [@replies] };
             @replies = ();
         }
         $id = $title = $user = $body = $r_user = $r_body = $r_date = '';
@@ -48,7 +49,7 @@ while (<$fh>) {
 }
 
 if ($r_user) { push @replies, { user => $r_user, date => $r_date, body => $r_body }; }
-if (@replies) { push @parsed, { id => $id, title => $title, user => $user, replies => \@replies }; }
+if (@replies) { push @parsed, { id => $id, title => $title, user => $user, body => $body, replies => \@replies }; }
 use JSON;
 print encode_json(\@parsed);
 __DATA__
